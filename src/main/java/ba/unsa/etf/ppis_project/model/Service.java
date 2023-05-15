@@ -1,6 +1,6 @@
-package ba.unsa.etf.ppis_project.service;
+package ba.unsa.etf.ppis_project.model;
 
-import ba.unsa.etf.ppis_project.doctor.Doctor;
+import ba.unsa.etf.ppis_project.model.Doctor;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 

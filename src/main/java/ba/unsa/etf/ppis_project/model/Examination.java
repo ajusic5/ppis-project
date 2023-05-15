@@ -1,7 +1,5 @@
-package ba.unsa.etf.ppis_project.examination;
+package ba.unsa.etf.ppis_project.model;
 
-import ba.unsa.etf.ppis_project.doctor.Doctor;
-import ba.unsa.etf.ppis_project.patient.Patient;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
@@ -67,4 +65,5 @@ public class Examination {
         this.patient = patient;
         this.doctor = doctor;
     }
+
 }

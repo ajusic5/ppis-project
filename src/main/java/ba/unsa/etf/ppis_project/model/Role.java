@@ -1,12 +1,8 @@
-package ba.unsa.etf.ppis_project.role;
+package ba.unsa.etf.ppis_project.model;
 
-import ba.unsa.etf.ppis_project.doctor.Doctor;
-import ba.unsa.etf.ppis_project.patient.Patient;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 
 @Entity
@@ -27,6 +23,11 @@ public class Role {
     }
 
     public Role(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public Role(int id, String roleName) {
+        this.id = id;
         this.roleName = roleName;
     }
 }

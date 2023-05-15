@@ -1,6 +1,7 @@
 package ba.unsa.etf.ppis_project.role;
 
 import ba.unsa.etf.ppis_project.doctor.DoctorRepository;
+import ba.unsa.etf.ppis_project.model.Role;
 import ba.unsa.etf.ppis_project.patient.PatientRepository;
 import ba.unsa.etf.ppis_project.util.NotFoundException;
 import java.util.List;

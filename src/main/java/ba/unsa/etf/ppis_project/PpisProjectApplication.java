@@ -1,14 +1,11 @@
 package ba.unsa.etf.ppis_project;
 
-import ba.unsa.etf.ppis_project.doctor.Doctor;
+import ba.unsa.etf.ppis_project.repos.UserRepository;
 import ba.unsa.etf.ppis_project.doctor.DoctorRepository;
-import ba.unsa.etf.ppis_project.examination.Examination;
 import ba.unsa.etf.ppis_project.examination.ExaminationRepository;
-import ba.unsa.etf.ppis_project.patient.Patient;
+import ba.unsa.etf.ppis_project.model.*;
 import ba.unsa.etf.ppis_project.patient.PatientRepository;
-import ba.unsa.etf.ppis_project.role.Role;
 import ba.unsa.etf.ppis_project.role.RoleRepository;
-import ba.unsa.etf.ppis_project.service.Service;
 import ba.unsa.etf.ppis_project.service.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -44,10 +41,13 @@ public class PpisProjectApplication implements CommandLineRunner {
     @Autowired
     ServiceRepository serviceRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     @Override
     public void run(String... args) throws Exception {
 
-       /* Role r1 = new Role("patient");
+        Role r1 = new Role("patient");
         roleRepository.save(r1);
 
         Role r2 = new Role("doctor");
@@ -70,6 +70,12 @@ public class PpisProjectApplication implements CommandLineRunner {
         services.add(s2);
         services.add(s3);
 
+        User u = new User("ajusic", "password", "doctor");
+        userRepository.save(u);
+
+        u = new User("iivic", "password", "patient");
+        userRepository.save(u);
+
         Doctor d = new Doctor("ajusic", "password", "Amila", "Jusić", LocalDate.parse("1996-01-14"), "ophthalmologist", r2, services);
         doctorRepository.save(d);
 
@@ -79,8 +85,8 @@ public class PpisProjectApplication implements CommandLineRunner {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         LocalDateTime appointmentTime = LocalDateTime.parse("2023-05-20T16:00:00.00", formatter);
 
-        Examination examination = new Examination("Eye checking appointment", appointmentTime, LocalDateTime.now(), "", "", false, false, p, d);
+        Examination examination = new Examination("Eyesight examination", appointmentTime, LocalDateTime.now(), "", "", false, false, p, d);
         examinationRepository.save(examination);
-        */
+
     }
 }

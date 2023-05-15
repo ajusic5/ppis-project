@@ -33,4 +33,28 @@ public class ExaminationDTO {
 
     private Boolean archived;
 
+    public ExaminationDTO() {
+    }
+
+    public ExaminationDTO(Integer patientId, LocalDateTime dateAndTimeOfAppointment, String typeOfExamination) {
+        this.patientId  = patientId;
+        this.dateAndTimeOfAppointment = dateAndTimeOfAppointment;
+        this.dateAndTimeOfReservation = LocalDateTime.now();
+        this.typeOfExamination = typeOfExamination;
+        this.successful = false;
+        this.archived = false;
+    }
+
+    public ExaminationDTO(Integer examinationId, Integer patientId, Integer doctorId, String typeOfExamination, LocalDateTime dateAndTimeOfAppointment, LocalDateTime dateAndTimeOfReservation, String diagnosis, String therapy, Boolean successful, Boolean archived) {
+        this.examinationId = examinationId;
+        this.patientId = patientId;
+        this.doctorId = doctorId;
+        this.typeOfExamination = typeOfExamination;
+        this.dateAndTimeOfAppointment = dateAndTimeOfAppointment;
+        this.dateAndTimeOfReservation = dateAndTimeOfReservation;
+        this.diagnosis = diagnosis;
+        this.therapy = therapy;
+        this.successful = successful;
+        this.archived = archived;
+    }
 }

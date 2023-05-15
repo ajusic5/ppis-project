@@ -31,6 +31,6 @@ public class DoctorDTO {
     @Size(max = 255)
     private String fieldOfExpertise;
 
-    private Integer doctor;
+//    private Integer doctor;
 
 }

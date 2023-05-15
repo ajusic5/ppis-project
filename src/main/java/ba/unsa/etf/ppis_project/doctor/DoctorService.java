@@ -1,6 +1,7 @@
 package ba.unsa.etf.ppis_project.doctor;
 
-import ba.unsa.etf.ppis_project.examination.Examination;
+import ba.unsa.etf.ppis_project.model.Doctor;
+import ba.unsa.etf.ppis_project.model.Examination;
 import ba.unsa.etf.ppis_project.examination.ExaminationRepository;
 import ba.unsa.etf.ppis_project.util.NotFoundException;
 import java.util.List;
@@ -21,7 +22,7 @@ public class DoctorService {
     }
 
     public List<DoctorDTO> findAll() {
-        final List<Doctor> doctors = doctorRepository.findAll(Sort.by("doctorId"));
+        final List<Doctor> doctors = doctorRepository.findAll(Sort.by("id"));
         return doctors.stream()
                 .map((doctor) -> mapToDTO(doctor, new DoctorDTO()))
                 .toList();
@@ -71,9 +72,9 @@ public class DoctorService {
         doctor.setDateOfBrith(doctorDTO.getDateOfBrith());
         doctor.getRole().setId(doctorDTO.getRoleId());
         doctor.setFieldOfExpertise(doctorDTO.getFieldOfExpertise());
-        final Examination examination = doctorDTO.getDoctor() == null ? null : examinationRepository.findById(doctorDTO.getDoctor())
-                .orElseThrow(() -> new NotFoundException("Doctor not found"));
-        examination.setDoctor(doctor);
+//        final Examination examination = doctorDTO.getDoctor() == null ? null : examinationRepository.findById(doctorDTO.getDoctor())
+//                .orElseThrow(() -> new NotFoundException("Doctor not found"));
+//        examination.setDoctor(doctor);
         return doctor;
     }
 

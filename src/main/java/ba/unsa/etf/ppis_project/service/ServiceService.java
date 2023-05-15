@@ -1,6 +1,11 @@
 package ba.unsa.etf.ppis_project.service;
 
+import ba.unsa.etf.ppis_project.examination.ExaminationDTO;
+import ba.unsa.etf.ppis_project.model.Examination;
+import ba.unsa.etf.ppis_project.model.Service;
 import ba.unsa.etf.ppis_project.util.NotFoundException;
+
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 
@@ -8,7 +13,7 @@ import org.springframework.data.domain.Sort;
 @org.springframework.stereotype.Service
 public class ServiceService {
 
-    private final ServiceRepository serviceRepository;
+    private ServiceRepository serviceRepository;
 
     public ServiceService(final ServiceRepository serviceRepository) {
         this.serviceRepository = serviceRepository;
@@ -44,6 +49,10 @@ public class ServiceService {
         serviceRepository.deleteById(serviceId);
     }
 
+    public void deleteServiceForDoctor(final Integer doctorId, final Integer serviceId){
+        serviceRepository.deleteServiceForDoctor(doctorId, serviceId);
+    }
+
     private ServiceDTO mapToDTO(final Service service, final ServiceDTO serviceDTO) {
         serviceDTO.setServiceId(service.getServiceId());
         serviceDTO.setServiceName(service.getServiceName());
@@ -55,4 +64,15 @@ public class ServiceService {
         return service;
     }
 
+    public List<ServiceDTO> getAllServicesOfDoctor(Integer doctorId) {
+        final List<Integer> ids = serviceRepository.findAllWithDoctorId(doctorId);
+        final List<Service> services = serviceRepository.findAllById(ids);
+        return services.stream()
+                .map((service) -> mapToDTO(service, new ServiceDTO()))
+                .toList();
+    }
+
+    public void addServiceForDoctor(final Integer doctorId, final Integer serviceId) {
+        serviceRepository.saveServiceForDoctor(doctorId, serviceId);
+    }
 }
