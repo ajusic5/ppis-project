@@ -1,7 +1,14 @@
-package ba.unsa.etf.ppis_project.doctor;
+package ba.unsa.etf.ppis_project.controller;
 
+import ba.unsa.etf.ppis_project.dto.DoctorDTO;
+import ba.unsa.etf.ppis_project.model.Doctor;
+import ba.unsa.etf.ppis_project.model.Patient;
+import ba.unsa.etf.ppis_project.service.DoctorService;
+import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
+
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,10 +37,24 @@ public class DoctorResource {
             @PathVariable(name = "doctorId") final Integer doctorId) {
         return ResponseEntity.ok(doctorService.get(doctorId));
     }
-
+    @GetMapping("/username/{username}")
+    public ResponseEntity<Doctor> getDoctor(
+            @PathVariable(name = "username") final String username) {
+        return ResponseEntity.ok(doctorService.getByUsername(username));
+    }
     @PostMapping
     @ApiResponse(responseCode = "201")
-    public ResponseEntity<Integer> createDoctor(@RequestBody @Valid final DoctorDTO doctorDTO) {
+    public ResponseEntity<Integer> createDoctor(@RequestBody JsonNode req) {
+
+        DoctorDTO doctorDTO = new DoctorDTO(req.get("username").asText(),
+                                            req.get("password").asText(),
+                                            req.get("name").asText(),
+                                            req.get("surname").asText(),
+                                            LocalDate.parse(req.get("dateOfBirth").asText()),
+                                            2,
+                                            req.get("fieldOfExpertise").asText()
+                );
+        System.out.println(doctorDTO.toString());
         final Integer createdDoctorId = doctorService.create(doctorDTO);
         return new ResponseEntity<>(createdDoctorId, HttpStatus.CREATED);
     }

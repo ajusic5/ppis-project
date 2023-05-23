@@ -1,4 +1,4 @@
-package ba.unsa.etf.ppis_project.service;
+package ba.unsa.etf.ppis_project.repos;
 
 import ba.unsa.etf.ppis_project.model.Examination;
 import ba.unsa.etf.ppis_project.model.Service;
@@ -27,5 +27,11 @@ public interface ServiceRepository extends JpaRepository<Service, Integer> {
     void saveServiceForDoctor( Integer doctorId, Integer serviceId);
 
     @Query(value = "select distinct service_name from service s where s.service_id=:serviceId", nativeQuery = true)
-    List<String> findServiceByServiceId(Integer serviceId);
+    String findServiceByServiceId(Integer serviceId);
+
+
+    @Modifying
+    @Transactional
+    @Query(value = "delete from doctor_service where doctor_id=:doctorId", nativeQuery = true)
+    void deleteAllWithDoctorId(Integer doctorId);
 }

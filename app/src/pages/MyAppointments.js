@@ -4,19 +4,21 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import '../style/AccessForms.css';
 import Paper from '@mui/material/Paper';
-
+import Alert from '@mui/material/Alert';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import {useParams} from "react-router-dom";
 
 function MyAppointments() {
     const [posts, setPosts] = useState([]);
+    const {id} = useParams()
 
     const fetchData = () => {
-        let id = 1
+        // let id = 1
         axios.get("http://localhost:8080/api/examinations/patient/" + id, { headers:{
                 'Content-Type': 'application/json'
             }
@@ -41,15 +43,19 @@ function MyAppointments() {
                 'Content-Type': 'application/json'
             }
         }).then(response =>{
-            setPosts((prevPosts) =>
-                prevPosts.filter((_, index) => index !== postIndex - 1)
-            );
+            if(response.data.toString() !='Appointment deleted'){
+                window.alert("More than 24 hours passed since reservation! Cannot cancel it through application, call the staff!");
+            }
+            else{
+                setPosts((prevPosts) =>
+                    prevPosts.filter((_, index) => index !== postIndex - 1)
+                );
+            }
+
         })
 
     };
-    const handleAdd = () =>{
 
-    }
 
     return (
         <TableContainer style={{ width: '50%'}} className='div' align="center" component={Paper}>
@@ -70,7 +76,7 @@ function MyAppointments() {
                     <TableCell component="th" scope="row" align={"center"}>
                         {post.typeOfExamination}
                     </TableCell>
-                    {/*<TableCell>{post.body}</TableCell>*/}
+
                     <TableCell align={"center"}>
                         <Button
                             variant="outlined"
@@ -83,17 +89,31 @@ function MyAppointments() {
                 </TableRow>
             ))}
             <TableRow>
-                <TableCell align={"center"} colSpan={5}>
+                <TableCell align={"center"} colSpan={3}>
                     <Button
-                        fullWidth={1}
+                        fullWidth={true}
                         variant="outlined"
-                        color="error"
+                        color="primary"
                         onClick={event => {
                             event.preventDefault();
-                            window.location.href='./NewAppointment';
+                            window.location.href='http://localhost:3000/NewAppointment/' + id;
                         }}
                     >
-                        Add
+                        Add appointment
+                    </Button>
+                </TableCell>
+            </TableRow>
+            <TableRow>
+                <TableCell align={"center"} colSpan={3}>
+                    <Button
+                        fullWidth={true}
+                        variant="outlined"
+                        color="secondary"
+                        onClick={event => {
+                            event.preventDefault();
+                            window.location.href='http://localhost:3000/PatientPage/' + id;
+                        }}                                >
+                        Go back
                     </Button>
                 </TableCell>
             </TableRow>

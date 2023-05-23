@@ -1,4 +1,4 @@
-package ba.unsa.etf.ppis_project.examination;
+package ba.unsa.etf.ppis_project.dto;
 
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -57,4 +57,5 @@ public class ExaminationDTO {
         this.successful = successful;
         this.archived = archived;
     }
+
 }

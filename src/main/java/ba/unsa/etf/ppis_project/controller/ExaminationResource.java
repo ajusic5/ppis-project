@@ -1,17 +1,18 @@
-package ba.unsa.etf.ppis_project.examination;
+package ba.unsa.etf.ppis_project.controller;
 
+import ba.unsa.etf.ppis_project.dto.ExaminationDTO;
+import ba.unsa.etf.ppis_project.service.ExaminationService;
 import ba.unsa.etf.ppis_project.model.Examination;
+import ba.unsa.etf.ppis_project.repos.ExaminationRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -46,8 +47,6 @@ public class ExaminationResource {
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Integer> createExamination(
             @RequestBody JsonNode req) {
-//        System.out.println(req.get("patientId").asInt());
-//        System.out.println("#");
         ExaminationDTO examinationDTO = new ExaminationDTO(req.get("patientId").asInt(),
                                                             LocalDateTime.parse(req.get("dateAndTimeOfAppointment").asText()),
                                                             req.get("typeOfExamination").asText()
@@ -66,27 +65,27 @@ public class ExaminationResource {
 
     @DeleteMapping("/{examinationId}")
     @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteExamination(
+    public ResponseEntity<String> deleteExamination(
             @PathVariable(name = "examinationId") final Integer examinationId) {
 
         Optional<Examination> e = examinationRepository.findById(examinationId);
-        System.out.println(examinationId);
+//        System.out.println(examinationId);
         if (e.get() == null){
             throw new IllegalArgumentException("No examination with this id");
         }
         else{
             Examination ex = e.get();
         //    System.out.println(ex.getDateAndTimeOfReservation().plusDays(1).isBefore(LocalDateTime.now().plusDays(1)));
-            if(ex.getDateAndTimeOfReservation().plusDays(1).isBefore(LocalDateTime.now().plusDays(1))){
+            if(LocalDateTime.now().isBefore(ex.getDateAndTimeOfReservation().plusDays(1))){
 //                System.out.println("Hellou?!");
                 ex.setArchived(true);
                 ex.setSuccessful(false);
                 examinationRepository.cancelAppointment(ex.getId());
-                return ResponseEntity.noContent().build();
+                return ResponseEntity.ok("Appointment deleted");
             }
         }
 //        examinationService.delete(examinationId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Cannot cancel it!");
     }
 
     @GetMapping("/patient/{patientId}")

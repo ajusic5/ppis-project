@@ -2,6 +2,7 @@ import React, { Component, useState, useEffect, useCallback } from 'react';
 import Box from '@mui/material/Box';
 import axios from "axios";
 import '../style/Home.css';
+import {Button} from "@mui/material";
 
 function Item(props) {
     const { sx, ...other } = props;
@@ -50,7 +51,8 @@ const Services = () => {
     return (
 
         <div style={{ width: '50%'}} className='div'>
-            <Box sx={{ display: 'grid', gridTemplateRows: 'repeat(3, 1fr)' }}>
+
+            <Box sx={{ display: 'grid' }}>
                 {services.length > 0 && (
                     <Item>
                         {services.map(user => (
@@ -58,7 +60,21 @@ const Services = () => {
                         ))}
                     </Item>
                 )}
+                {/*<Item>*/}
+                {/*    <Button*/}
+                {/*        fullWidth={true}*/}
+                {/*        variant="outlined"*/}
+                {/*        color="error"*/}
+                {/*        onClick={event => {*/}
+                {/*            event.preventDefault();*/}
+                {/*            window.location.href='http://localhost:3000';*/}
+                {/*        }}                                >*/}
+                {/*        Go back*/}
+                {/*    </Button>*/}
+                {/*</Item>*/}
             </Box>
+
+
         </div>
     )
 }

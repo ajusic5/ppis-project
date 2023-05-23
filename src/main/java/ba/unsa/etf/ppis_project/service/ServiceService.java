@@ -1,11 +1,10 @@
 package ba.unsa.etf.ppis_project.service;
 
-import ba.unsa.etf.ppis_project.examination.ExaminationDTO;
-import ba.unsa.etf.ppis_project.model.Examination;
+import ba.unsa.etf.ppis_project.dto.ServiceDTO;
 import ba.unsa.etf.ppis_project.model.Service;
+import ba.unsa.etf.ppis_project.repos.ServiceRepository;
 import ba.unsa.etf.ppis_project.util.NotFoundException;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 

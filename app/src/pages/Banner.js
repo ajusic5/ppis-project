@@ -28,7 +28,7 @@ const Banner = () => {
                         </HashLink>
                         <HashLink smooth to="/SignUp" className='text-style'>
                             <div>
-                                <Button sx={{ mt: 2 }} variant="contained" className="CheckButton">
+                                <Button sx={{ mt: 2 }}  variant="contained" className="CheckButton">
                                     Register
                                 </Button></div>
                         </HashLink>

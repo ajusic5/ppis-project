@@ -2,12 +2,6 @@ import React, { Component, useState, useEffect, useCallback } from 'react';
 import Box from '@mui/material/Box';
 import '../style/Home.css';
 import {useNavigate, useParams} from "react-router-dom";
-
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import {TextareaAutosize} from "@mui/material";
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -43,9 +37,10 @@ const AddDiagnosisAndTherapy = () => {
 
             })
             .then(data => {
-                // let id = "1" //dodati da bude fkt prijavljenog pacijenta
                 setService(data)
                 setPatientId(id)
+                setTherapy(data.therapy)
+                setDiagnosis(data.diagnosis)
             })
     }
 
@@ -83,9 +78,9 @@ const AddDiagnosisAndTherapy = () => {
                 'Content-Type': 'application/json'
             }
         }).then(r => {
-            if (r.status === 201) {
-                window.location.href = './DailyAppointments';
-
+            console.log(r.status)
+            if (r.status === 200) {
+                window.location.href='http://localhost:3000/DailyAppointments/' + docId;
             }
         }).catch(function (error) {
             console.log(error);

@@ -1,5 +1,7 @@
-package ba.unsa.etf.ppis_project.role;
+package ba.unsa.etf.ppis_project.controller;
 
+import ba.unsa.etf.ppis_project.dto.RoleDTO;
+import ba.unsa.etf.ppis_project.service.RoleService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import java.util.List;

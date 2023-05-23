@@ -27,6 +27,7 @@ public class Patient {
     private String surname;
 
     @Size(max = 255)
+    @Column(unique = true)
     private String username;
 
     @Size(max = 255)

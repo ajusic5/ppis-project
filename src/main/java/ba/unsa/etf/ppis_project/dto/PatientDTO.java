@@ -1,4 +1,4 @@
-package ba.unsa.etf.ppis_project.patient;
+package ba.unsa.etf.ppis_project.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Size;

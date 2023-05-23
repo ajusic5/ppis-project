@@ -1,4 +1,4 @@
-package ba.unsa.etf.ppis_project.role;
+package ba.unsa.etf.ppis_project.dto;
 
 import jakarta.validation.constraints.Size;
 import lombok.Getter;

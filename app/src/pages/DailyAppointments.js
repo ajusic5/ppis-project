@@ -87,7 +87,6 @@ const DailyAppointments = () => {
                                     color="error"
                                     onClick={event => {
                                         event.preventDefault();
-                                   //     navigate('http:localhost:8080/api/examinations/' + )
                                         window.location.href='./AddDiagnosisAndTherapy/' + event.target.id + '/' + doctorId;
                                     }}                                >
                                     Edit
@@ -95,6 +94,20 @@ const DailyAppointments = () => {
                             </TableCell>
                         </TableRow>
                     ))}
+                    <TableRow>
+                        <TableCell align={"center"} colSpan={3}>
+                            <Button
+                                fullWidth={1}
+                                variant="outlined"
+                                color="secondary"
+                                onClick={event => {
+                                    event.preventDefault();
+                                    window.location.href='http://localhost:3000/DoctorPage/' + doctorId;
+                                }}                                >
+                                Go back
+                            </Button>
+                        </TableCell>
+                    </TableRow>
 
                 </TableBody>
             </Table>

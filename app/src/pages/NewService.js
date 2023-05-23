@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import axios from "axios";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {useParams} from "react-router-dom";
 
 const theme = createTheme();
 
@@ -26,6 +27,7 @@ const NewService = () => {
     const [services, setServices] = useState([])
     const [doctorId, setDoctorId] = useState('')
 
+
     const fetchData = () => {
         axios.get("http://localhost:8080/api/services", {headers: {
                 'Content-Type': 'application/json'
@@ -35,9 +37,10 @@ const NewService = () => {
 
             })
             .then(data => {
-                let id = "1" //dodati da bude fkt prijavljenog liječnika
+                // let id = "1" //dodati da bude fkt prijavljenog liječnika
                 setServices(data)
-                setDoctorId(id)
+                let id = window.location.href.split('/')[4]
+                 setDoctorId(id)
             })
     }
 
@@ -53,6 +56,21 @@ const NewService = () => {
     const handleSubmit = (e) => {
 
         e.preventDefault();
+        // console.log(doctorId)
+        console.log(window.location.href)
+
+        // console.log(window.location.href.split('/')[0])
+        // console.log(window.location.href.split('/')[1])
+        // console.log(window.location.href.split('/')[2])
+        // console.log(window.location.href.split('/')[3])
+        // console.log(window.location.href.split('/')[4])
+        // console.log(window.location.href.split('/')[5])
+
+        // console.log(id)
+
+        // setDoctorId(id)
+
+        console.log(doctorId)
 
         const formData = {
             'doctorId': doctorId,
@@ -64,8 +82,10 @@ const NewService = () => {
                 'Content-Type': 'application/json'
             }
         }).then(r => {
-            if (r.status === 201) {
-                window.location.href = './MyServices';
+            console.log("#")
+            console.log(r.status)
+            if (r.status === 204) {
+                window.location.href = 'http://localhost:3000/MyServices/' + doctorId;
 
             }
         }).catch(function (error) {

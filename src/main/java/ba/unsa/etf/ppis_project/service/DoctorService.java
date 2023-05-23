@@ -1,8 +1,13 @@
-package ba.unsa.etf.ppis_project.doctor;
+package ba.unsa.etf.ppis_project.service;
 
+import ba.unsa.etf.ppis_project.dto.DoctorDTO;
 import ba.unsa.etf.ppis_project.model.Doctor;
-import ba.unsa.etf.ppis_project.model.Examination;
-import ba.unsa.etf.ppis_project.examination.ExaminationRepository;
+import ba.unsa.etf.ppis_project.repos.DoctorRepository;
+import ba.unsa.etf.ppis_project.repos.ExaminationRepository;
+import ba.unsa.etf.ppis_project.model.Role;
+import ba.unsa.etf.ppis_project.model.User;
+import ba.unsa.etf.ppis_project.repos.ServiceRepository;
+import ba.unsa.etf.ppis_project.repos.UserRepository;
 import ba.unsa.etf.ppis_project.util.NotFoundException;
 import java.util.List;
 import org.springframework.data.domain.Sort;
@@ -14,18 +19,37 @@ public class DoctorService {
 
     private final DoctorRepository doctorRepository;
     private final ExaminationRepository examinationRepository;
+    private final ServiceRepository serviceRepository;
+    private final UserRepository userRepository;
+
 
     public DoctorService(final DoctorRepository doctorRepository,
-            final ExaminationRepository examinationRepository) {
+            final ExaminationRepository examinationRepository,
+                         final ServiceRepository serviceRepository,
+                         final UserRepository userRepository) {
         this.doctorRepository = doctorRepository;
         this.examinationRepository = examinationRepository;
+        this.serviceRepository = serviceRepository;
+        this.userRepository = userRepository;
     }
 
     public List<DoctorDTO> findAll() {
         final List<Doctor> doctors = doctorRepository.findAll(Sort.by("id"));
         return doctors.stream()
-                .map((doctor) -> mapToDTO(doctor, new DoctorDTO()))
+                .map((doctor) -> mapToDTO2(doctor, new DoctorDTO()))
                 .toList();
+    }
+
+    private DoctorDTO mapToDTO2(Doctor doctor, DoctorDTO doctorDTO) {
+        doctorDTO.setDoctorId(doctor.getId());
+        doctorDTO.setUsername(doctor.getUsername());
+        doctorDTO.setPassword(doctor.getPassword());
+        doctorDTO.setName(doctor.getName());
+        doctorDTO.setSurname(doctor.getSurname());
+        doctorDTO.setDateOfBrith(doctor.getDateOfBrith());
+        doctorDTO.setRoleId(2);
+        doctorDTO.setFieldOfExpertise(doctor.getFieldOfExpertise());
+        return doctorDTO;
     }
 
     public DoctorDTO get(final Integer doctorId) {
@@ -36,8 +60,23 @@ public class DoctorService {
 
     public Integer create(final DoctorDTO doctorDTO) {
         final Doctor doctor = new Doctor();
-        mapToEntity(doctorDTO, doctor);
+        mapToEntity2(doctor, doctorDTO);
+        User user = new User(doctor.getUsername(), doctor.getPassword(), "doctor");
+        userRepository.save(user);
         return doctorRepository.save(doctor).getId();
+    }
+
+    private void mapToEntity2(Doctor doctorDTO, DoctorDTO doctor) {
+//        doctorDTO.setDoctorId(doctor.getId());
+        doctorDTO.setUsername(doctor.getUsername());
+        doctorDTO.setPassword(doctor.getPassword());
+        doctorDTO.setName(doctor.getName());
+        doctorDTO.setSurname(doctor.getSurname());
+        doctorDTO.setDateOfBrith(doctor.getDateOfBrith());
+        doctorDTO.setRole(new Role(2, "doctor"));
+        doctorDTO.setFieldOfExpertise(doctor.getFieldOfExpertise());
+
+        System.out.println(doctorDTO);
     }
 
     public void update(final Integer doctorId, final DoctorDTO doctorDTO) {
@@ -48,6 +87,14 @@ public class DoctorService {
     }
 
     public void delete(final Integer doctorId) {
+        serviceRepository.deleteAllWithDoctorId(doctorId);
+        examinationRepository.deleteAllWithDoctorId(doctorId);
+        Doctor username = doctorRepository.getDoctorById(doctorId);
+        System.out.println("####");
+        System.out.println(username);
+        System.out.println("$$$$");
+        System.out.println(username.getUsername());
+        userRepository.deleteByUsername(username.getUsername());
         doctorRepository.deleteById(doctorId);
     }
 
@@ -78,4 +125,7 @@ public class DoctorService {
         return doctor;
     }
 
+    public Doctor getByUsername(String username) {
+        return doctorRepository.getDoctorByUsername(username);
+    }
 }

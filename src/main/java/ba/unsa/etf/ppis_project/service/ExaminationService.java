@@ -1,14 +1,16 @@
-package ba.unsa.etf.ppis_project.examination;
+package ba.unsa.etf.ppis_project.service;
 
 
-import ba.unsa.etf.ppis_project.doctor.DoctorRepository;
-import ba.unsa.etf.ppis_project.model.Doctor;
+import ba.unsa.etf.ppis_project.dto.ExaminationDTO;
+import ba.unsa.etf.ppis_project.dto.ServiceDTO;
+import ba.unsa.etf.ppis_project.repos.DoctorRepository;
 import ba.unsa.etf.ppis_project.model.Examination;
-import ba.unsa.etf.ppis_project.model.Patient;
-import ba.unsa.etf.ppis_project.patient.PatientRepository;
-import ba.unsa.etf.ppis_project.service.ServiceRepository;
+import ba.unsa.etf.ppis_project.repos.ExaminationRepository;
+import ba.unsa.etf.ppis_project.repos.PatientRepository;
+import ba.unsa.etf.ppis_project.repos.ServiceRepository;
 import ba.unsa.etf.ppis_project.util.NotFoundException;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -157,20 +158,29 @@ public class ExaminationService {
 
         List<String> services = new ArrayList<>();
 
-
         for (int i = 0; i < list.size(); i++){
-            System.out.println(list.get(i));
-            services.addAll(serviceRepository.findServiceByServiceId(list.get(i)));
-            System.out.println(services);
+            services.add(serviceRepository.findServiceByServiceId(list.get(i)));
         }
-
 
         List<Examination> examinationDTOS = new ArrayList<>();
 
-
         for (int i = 0; i < services.size(); i++){
             examinationDTOS.addAll(examinationRepository.findAllExaminationsServices(services.get(i)));
-            System.out.println(examinationDTOS);
+
+        }
+
+        LocalDate date = LocalDate.now();
+
+
+        for (int i = 0; i < examinationDTOS.size(); i++){
+            int day = examinationDTOS.get(i).getDateAndTimeOfAppointment().getDayOfMonth();
+            int month = examinationDTOS.get(i).getDateAndTimeOfAppointment().getMonthValue();
+            int year = examinationDTOS.get(i).getDateAndTimeOfAppointment().getYear();
+
+            if(!(day == date.getDayOfMonth() && month == date.getMonthValue() && year == date.getYear()) || examinationDTOS.get(i).getArchived() == true){
+                examinationDTOS.remove(i);
+                i--;
+            }
         }
         return examinationDTOS;
     }

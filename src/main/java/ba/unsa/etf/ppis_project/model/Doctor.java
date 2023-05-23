@@ -20,7 +20,7 @@ public class Doctor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
+    @Column(unique = true)
     private String username;
 
     @Column
@@ -37,10 +37,6 @@ public class Doctor {
 
     @Column
     private String fieldOfExpertise;
-
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "doctor_id", unique = true)
-//    private Examination examination;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference

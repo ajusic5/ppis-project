@@ -1,4 +1,4 @@
-package ba.unsa.etf.ppis_project.examination;
+package ba.unsa.etf.ppis_project.repos;
 
 import ba.unsa.etf.ppis_project.model.Examination;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,4 +23,10 @@ public interface ExaminationRepository extends JpaRepository<Examination, Intege
 
     @Query(value = "select distinct * from examination e where e.type_of_examination=:service", nativeQuery = true)
     List<Examination> findAllExaminationsServices(String service);
+
+
+    @Modifying
+    @Transactional
+    @Query(value = "delete from examination where doctor_id=:doctorId", nativeQuery = true)
+    void deleteAllWithDoctorId(Integer doctorId);
 }

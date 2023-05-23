@@ -4,23 +4,20 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import '../style/AccessForms.css';
 import Paper from '@mui/material/Paper';
-
+import Alert from '@mui/material/Alert';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import {useParams} from "react-router-dom";
 
-function MyServices(props) {
+function AdminPage() {
     const [posts, setPosts] = useState([]);
-    const [doctorId, setDoctorId] = useState('')
-    const {id} = useParams()
 
     const fetchData = () => {
-       console.log(id)
-        axios.get("http://localhost:8080/api/services/doctor/" + id, { headers:{
+        let id = 1
+        axios.get("http://localhost:8080/api/doctors", { headers:{
                 'Content-Type': 'application/json'
             }
         })
@@ -30,7 +27,6 @@ function MyServices(props) {
 
             .then((data) => {
                 setPosts(data);
-                setDoctorId(id) //promijeniti kad se bude radila autentifikacija
             });
     };
 
@@ -40,19 +36,21 @@ function MyServices(props) {
 
     const handleDelete = (postIndex) => {
 
-        const formData = {
-            "doctorId": doctorId,
-            "serviceId": postIndex
-        }
-
-        axios.post("http://localhost:8080/api/services/doctor_delete", formData,{
+        axios.delete("http://localhost:8080/api/doctors/" + postIndex, {
             headers:{
                 'Content-Type': 'application/json'
             }
         }).then(response =>{
-            setPosts((prevPosts) =>
-                prevPosts.filter((_, index) => index !== postIndex - 1)
-            );
+            console.log(response)
+            if(response.status!=204){
+                window.alert("Could not delete the doctor!");
+            }
+            else{
+                setPosts((prevPosts) =>
+                    prevPosts.filter((_, index) => index !== postIndex - 1)
+                );
+            }
+
         })
 
     };
@@ -65,22 +63,26 @@ function MyServices(props) {
             <Table  sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell align={"center"}>My services</TableCell>
-                        <TableCell align={"center"}>Delete the service</TableCell>
+                        <TableCell align={"center"}>Name</TableCell>
+                        <TableCell align={"center"} >Surname</TableCell>
+                        <TableCell align={"center"}>Delete Doctor</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody align="center">
                     {posts.map((post, postIndex) => (
-                        <TableRow key={post.serviceId}>
+                        <TableRow key={post.doctorId}>
                             <TableCell component="th" scope="row" padding={"normal"} align={"center"}>
-                                {post.serviceName}
+                                {post.name}
                             </TableCell>
-
+                            <TableCell component="th" scope="row" align={"center"}>
+                                {post.surname}
+                            </TableCell>
+                            {/*<TableCell>{post.body}</TableCell>*/}
                             <TableCell align={"center"}>
                                 <Button
                                     variant="outlined"
                                     color="error"
-                                     onClick={() => handleDelete(post.serviceId)}
+                                    onClick={() => handleDelete(post.doctorId)}
                                 >
                                     Delete
                                 </Button>
@@ -95,25 +97,24 @@ function MyServices(props) {
                                 color="primary"
                                 onClick={event => {
                                     event.preventDefault();
-                                    console.log(id)
-                                    window.location.href='http://localhost:3000/NewService/' + id;
+                                    window.location.href='./NewDoctor';
                                 }}
                             >
-                                Add service
+                                Add
                             </Button>
                         </TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell align={"center"} colSpan={3}>
                             <Button
-                                fullWidth={1}
+                                fullWidth={true}
                                 variant="outlined"
                                 color="secondary"
                                 onClick={event => {
                                     event.preventDefault();
-                                    window.location.href='http://localhost:3000/DoctorPage/' + id;
+                                    window.location.href='http://localhost:3000';
                                 }}                                >
-                                Go back
+                                Log Out
                             </Button>
                         </TableCell>
                     </TableRow>
@@ -122,4 +123,4 @@ function MyServices(props) {
         </TableContainer>
     );
 }
-export default MyServices
+export default AdminPage

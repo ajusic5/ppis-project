@@ -66,10 +66,11 @@ class SignUp extends React.Component{
             }).then(r => {
                 if (r.status === 201) {
                     window.location.href = './LogIn';
-
                 }
+
             }).catch(function (error) {
-                console.log(error);
+                window.alert("Username already taken");
+                window.location.href = './SignUp';
             });
         }
     }

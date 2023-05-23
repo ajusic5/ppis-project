@@ -1,6 +1,10 @@
-package ba.unsa.etf.ppis_project.patient;
+package ba.unsa.etf.ppis_project.controller;
 
+import ba.unsa.etf.ppis_project.dto.PatientDTO;
 import ba.unsa.etf.ppis_project.model.Patient;
+import ba.unsa.etf.ppis_project.model.User;
+import ba.unsa.etf.ppis_project.service.PatientService;
+import ba.unsa.etf.ppis_project.service.UserService;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
@@ -18,9 +22,11 @@ import org.springframework.web.bind.annotation.*;
 public class PatientResource {
 
     private final PatientService patientService;
+    private final UserService userService;
 
-    public PatientResource(final PatientService patientService) {
+    public PatientResource(final PatientService patientService, UserService userService) {
         this.patientService = patientService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -32,6 +38,12 @@ public class PatientResource {
     public ResponseEntity<PatientDTO> getPatient(
             @PathVariable(name = "patientId") final Integer patientId) {
         return ResponseEntity.ok(patientService.get(patientId));
+    }
+
+    @GetMapping("/username/{username}")
+    public ResponseEntity<Patient> getPatient(
+            @PathVariable(name = "username") final String username) {
+        return ResponseEntity.ok(patientService.getByUsername(username));
     }
 
     @PostMapping
@@ -67,5 +79,7 @@ public class PatientResource {
         patientService.delete(patientId);
         return ResponseEntity.noContent().build();
     }
+
+
 
 }

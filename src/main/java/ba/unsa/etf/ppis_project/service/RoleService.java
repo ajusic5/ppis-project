@@ -1,8 +1,10 @@
-package ba.unsa.etf.ppis_project.role;
+package ba.unsa.etf.ppis_project.service;
 
-import ba.unsa.etf.ppis_project.doctor.DoctorRepository;
+import ba.unsa.etf.ppis_project.repos.DoctorRepository;
 import ba.unsa.etf.ppis_project.model.Role;
-import ba.unsa.etf.ppis_project.patient.PatientRepository;
+import ba.unsa.etf.ppis_project.repos.PatientRepository;
+import ba.unsa.etf.ppis_project.repos.RoleRepository;
+import ba.unsa.etf.ppis_project.dto.RoleDTO;
 import ba.unsa.etf.ppis_project.util.NotFoundException;
 import java.util.List;
 import org.springframework.data.domain.Sort;

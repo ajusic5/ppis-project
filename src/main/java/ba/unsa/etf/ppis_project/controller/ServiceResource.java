@@ -1,6 +1,7 @@
-package ba.unsa.etf.ppis_project.service;
+package ba.unsa.etf.ppis_project.controller;
 
-import ba.unsa.etf.ppis_project.examination.ExaminationDTO;
+import ba.unsa.etf.ppis_project.dto.ServiceDTO;
+import ba.unsa.etf.ppis_project.service.ServiceService;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;

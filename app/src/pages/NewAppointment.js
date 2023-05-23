@@ -41,8 +41,10 @@ const NewAppointment = () => {
 
             })
             .then(data => {
-                let id = "1" //dodati da bude fkt prijavljenog pacijenta
+
                 setServices(data)
+                let id = window.location.href.split('/')[4]
+
                 setPatientId(id)
             })
     }
@@ -118,7 +120,7 @@ const NewAppointment = () => {
             }
         }).then(r => {
             if (r.status === 201) {
-                window.location.href = './MyAppointments';
+                window.location.href = 'http://localhost:3000/MyAppointments/' + patientId;
 
             }
         }).catch(function (error) {

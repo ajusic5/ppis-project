@@ -1,7 +1,11 @@
-package ba.unsa.etf.ppis_project.patient;
+package ba.unsa.etf.ppis_project.service;
 
-import ba.unsa.etf.ppis_project.examination.ExaminationRepository;
+import ba.unsa.etf.ppis_project.dto.PatientDTO;
+import ba.unsa.etf.ppis_project.repos.ExaminationRepository;
 import ba.unsa.etf.ppis_project.model.Patient;
+import ba.unsa.etf.ppis_project.model.User;
+import ba.unsa.etf.ppis_project.repos.PatientRepository;
+import ba.unsa.etf.ppis_project.repos.UserRepository;
 import ba.unsa.etf.ppis_project.util.NotFoundException;
 
 import java.util.List;
@@ -15,11 +19,14 @@ public class PatientService {
 
     private final PatientRepository patientRepository;
     private final ExaminationRepository examinationRepository;
+    private final UserRepository userRepository;
 
     public PatientService(final PatientRepository patientRepository,
-            final ExaminationRepository examinationRepository) {
+            final ExaminationRepository examinationRepository,
+            final UserRepository userRepository) {
         this.patientRepository = patientRepository;
         this.examinationRepository = examinationRepository;
+        this.userRepository = userRepository;
     }
 
     public List<PatientDTO> findAll() {
@@ -38,6 +45,9 @@ public class PatientService {
     public Integer create(final PatientDTO patientDTO) {
         final Patient patient = new Patient();
         mapToEntity(patientDTO, patient);
+        User user = new User (patient.getUsername(), patient.getPassword(), "patient");
+        userRepository.save(user);
+        System.out.println(user.toString());
         return patientRepository.save(patient).getId();
     }
 
@@ -82,4 +92,7 @@ public class PatientService {
         return patient;
     }
 
+    public Patient getByUsername(String username) {
+       return patientRepository.getPatientByUsername(username);
+    }
 }

@@ -13,26 +13,38 @@ class DoctorPage extends React.Component {
 
     }
 
+    handleServices = event => {
+        const id = window.location.href.split('/')[4]
+        console.log(id)
+        window.location.href='http://localhost:3000/MyServices/' + id;
+    }
+
+    handleAppointments = event => {
+        const id = window.location.href.split('/')[4]
+        console.log(id)
+        window.location.href='http://localhost:3000/DailyAppointments/' + id;
+    }
+
+    handleLogOut = event => {
+        window.location.href='http://localhost:3000';
+    }
+
     render() {
         return (
             <div>
                 <div className="column1-user-page">
                     <h2 className='userPage-h2' onClick={event => {
                         event.preventDefault();
-                        window.location.href = './ManageAccount';
                     }}><i className="fas fa-user-circle"></i></h2>
                     <h2 style={{textAlign: "center"}}>{"Hello " }</h2>
-                    <button className='button-logout' /*onClick={AuthService.logout}*/><a style={{color: "white"}}>LOG
+                    <button className='button-logout' onClick={this.handleLogOut}><a style={{color: "white"}}>LOG
                         OUT</a></button>
                 </div>
                 <div className="column2-user-page">
-                    <h2 style={{marginLeft: "24%"}} className='h2-style' onClick={event => {
-                        event.preventDefault();
-                        window.location.href = './Home';
-                    }}>Doctor Page</h2>
-                    {<a href="/MyServices" className="button"><i className="fa fa-plus"></i>&nbsp; My services</a>}
-                    <a href="/DailyAppointments" className="button"><i className="fas fa-book"></i>&nbsp; All appointments for the day</a>
-                    <a href="/Home" className="button"><i className="fas fa-home"></i>&nbsp; Home</a>
+                    <h2 style={{marginLeft: "25%", color: "#1976d2"}} className='h2-style' >Doctor Page</h2>
+                    {<a onClick={this.handleServices}  className="button"><i className="fa fa-plus"></i>&nbsp; My services</a>}
+                    <a onClick={this.handleAppointments} className="button"><i className="fas fa-book"></i>&nbsp; All appointments for the day</a>
+                    {/*<a href='/' className="button"><i className="fas fa-home"></i>&nbsp; Home</a>*/}
                 </div>
             </div>
         );

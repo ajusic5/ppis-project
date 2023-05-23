@@ -1,4 +1,4 @@
-package ba.unsa.etf.ppis_project.service;
+package ba.unsa.etf.ppis_project.dto;
 
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
