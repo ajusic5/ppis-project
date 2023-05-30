@@ -10,7 +10,7 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import {Button} from "@mui/material";
 import TableContainer from "@mui/material/TableContainer";
-import { useNavigate } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 
 function Item(props) {
@@ -40,9 +40,9 @@ const DailyAppointments = () => {
 
     const [doctorId, setDoctorId] = useState('')
     const [posts, setPosts] = useState([])
+    const {id} = useParams()
 
     const fetchData = () => {
-        let id = 1
         setDoctorId(1) //regulisati preko autentifikacije, ali preko ovog id, preko doctorId ga blokira CORS iako je dodano da pusti
         axios.get("http://localhost:8080/api/examinations/doctor/" + id, {headers: {
                 'Content-Type': 'application/json'
@@ -102,7 +102,7 @@ const DailyAppointments = () => {
                                 color="secondary"
                                 onClick={event => {
                                     event.preventDefault();
-                                    window.location.href='http://localhost:3000/DoctorPage/' + doctorId;
+                                    window.location.href='http://localhost:3000/DoctorPage/' + id;
                                 }}                                >
                                 Go back
                             </Button>

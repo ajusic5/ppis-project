@@ -30,6 +30,7 @@ function MyServices(props) {
 
             .then((data) => {
                 setPosts(data);
+                console.log(posts)
                 setDoctorId(id) //promijeniti kad se bude radila autentifikacija
             });
     };
@@ -111,6 +112,7 @@ function MyServices(props) {
                                 color="secondary"
                                 onClick={event => {
                                     event.preventDefault();
+                                    console.log(id)
                                     window.location.href='http://localhost:3000/DoctorPage/' + id;
                                 }}                                >
                                 Go back
