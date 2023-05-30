@@ -22,7 +22,7 @@ const AddDiagnosisAndTherapy = () => {
     const [therapy, setTherapy] = useState('')
     const [service, setService] = useState('')
     const [patientId, setPatientId] = useState('')
-    const {id, docId} = useParams()
+    const {docId, id} = useParams()
 
 
     const fetchData = () => {
@@ -40,7 +40,9 @@ const AddDiagnosisAndTherapy = () => {
                 setService(data)
                 setPatientId(id)
                 setTherapy(data.therapy)
+                console.log(data.therapy)
                 setDiagnosis(data.diagnosis)
+                console.log(data.diagnosis)
             })
     }
 
@@ -59,6 +61,9 @@ const AddDiagnosisAndTherapy = () => {
     const handleSubmit = (e) => {
 
         e.preventDefault();
+        console.log(diagnosis)
+        console.log(therapy)
+        console.log(docId)
 
         const formData = {
             'examinationId':service.id,

@@ -177,7 +177,7 @@ public class ExaminationService {
             int month = examinationDTOS.get(i).getDateAndTimeOfAppointment().getMonthValue();
             int year = examinationDTOS.get(i).getDateAndTimeOfAppointment().getYear();
 
-            if(!(day == date.getDayOfMonth() && month == date.getMonthValue() && year == date.getYear()) || examinationDTOS.get(i).getArchived() == true){
+            if(!(day == date.getDayOfMonth() && month == date.getMonthValue() && year == date.getYear())){
                 examinationDTOS.remove(i);
                 i--;
             }

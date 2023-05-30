@@ -68,6 +68,8 @@ const DailyAppointments = () => {
                     <TableRow>
                         <TableCell align={"center"}>Date and time of appointment</TableCell>
                         <TableCell align={"center"} >Type of examination</TableCell>
+                        <TableCell align={"center"} >Diagnosis</TableCell>
+                        <TableCell align={"center"} >Therapy</TableCell>
                         <TableCell align={"center"}>Add diagnosis and therapy</TableCell>
                     </TableRow>
                 </TableHead>
@@ -80,6 +82,12 @@ const DailyAppointments = () => {
                             <TableCell component="th" scope="row" align={"center"}>
                                 {post.typeOfExamination}
                             </TableCell>
+                            <TableCell component="th" scope="row" align={"center"}>
+                                {post.diagnosis}
+                            </TableCell>
+                            <TableCell component="th" scope="row" align={"center"}>
+                                {post.therapy}
+                            </TableCell>
                             <TableCell align={"center"}>
                                 <Button
                                     id={post.id}
@@ -87,7 +95,7 @@ const DailyAppointments = () => {
                                     color="error"
                                     onClick={event => {
                                         event.preventDefault();
-                                        window.location.href='./AddDiagnosisAndTherapy/' + event.target.id + '/' + doctorId;
+                                        window.location.href='./AddDiagnosisAndTherapy/' + event.target.id + '/' + id;
                                     }}                                >
                                     Edit
                                 </Button>
@@ -95,7 +103,7 @@ const DailyAppointments = () => {
                         </TableRow>
                     ))}
                     <TableRow>
-                        <TableCell align={"center"} colSpan={3}>
+                        <TableCell align={"center"} colSpan={5}>
                             <Button
                                 fullWidth={1}
                                 variant="outlined"

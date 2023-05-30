@@ -29,6 +29,7 @@ function MyAppointments() {
 
             .then((data) => {
                 setPosts(data);
+                console.log(data)
             });
     };
 
@@ -47,9 +48,10 @@ function MyAppointments() {
                 window.alert("More than 24 hours passed since reservation! Cannot cancel it through application, call the staff!");
             }
             else{
-                setPosts((prevPosts) =>
-                    prevPosts.filter((_, index) => index !== postIndex - 1)
-                );
+                // setPosts((prevPosts) =>
+                //     prevPosts.filter((_, index) => index !== postIndex - 1)
+                // );
+                window.location.reload()
             }
 
         })
@@ -62,6 +64,7 @@ function MyAppointments() {
             <Table  sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
+                        <TableCell align={"center"}>Date and time of reservation</TableCell>
                         <TableCell align={"center"}>Date and time of appointment</TableCell>
                         <TableCell align={"center"} >Type of examination</TableCell>
                         <TableCell align={"center"}>Cancel appointment</TableCell>
@@ -70,6 +73,9 @@ function MyAppointments() {
         <TableBody align="center">
             {posts.map((post, postIndex) => (
                 <TableRow key={post.examinationId}>
+                    <TableCell component="th" scope="row" padding={"normal"} align={"center"}>
+                        {post.dateAndTimeOfReservation}
+                    </TableCell>
                     <TableCell component="th" scope="row" padding={"normal"} align={"center"}>
                         {post.dateAndTimeOfAppointment}
                     </TableCell>
@@ -89,7 +95,7 @@ function MyAppointments() {
                 </TableRow>
             ))}
             <TableRow>
-                <TableCell align={"center"} colSpan={3}>
+                <TableCell align={"center"} colSpan={4}>
                     <Button
                         fullWidth={true}
                         variant="outlined"
@@ -104,7 +110,7 @@ function MyAppointments() {
                 </TableCell>
             </TableRow>
             <TableRow>
-                <TableCell align={"center"} colSpan={3}>
+                <TableCell align={"center"} colSpan={4}>
                     <Button
                         fullWidth={true}
                         variant="outlined"

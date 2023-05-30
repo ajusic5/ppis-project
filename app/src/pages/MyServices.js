@@ -51,9 +51,10 @@ function MyServices(props) {
                 'Content-Type': 'application/json'
             }
         }).then(response =>{
-            setPosts((prevPosts) =>
-                prevPosts.filter((_, index) => index !== postIndex - 1)
-            );
+            window.location.reload()
+            // setPosts((prevPosts) =>
+            //     prevPosts.filter((_, index) => index !== postIndex - 1)
+            // );
         })
 
     };

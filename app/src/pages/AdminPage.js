@@ -46,9 +46,10 @@ function AdminPage() {
                 window.alert("Could not delete the doctor!");
             }
             else{
-                setPosts((prevPosts) =>
-                    prevPosts.filter((_, index) => index !== postIndex - 1)
-                );
+                window.location.reload()
+                // setPosts((prevPosts) =>
+                //     prevPosts.filter((_, index) => index !== postIndex - 1)
+                // );
             }
 
         })
